@@ -1,0 +1,12 @@
+# ninja log v5
+1	657	635135681	CMakeFiles/OpenGLUdemy.dir/main.cpp.obj	80a33c9ff33a2d92
+657	1393	635135681	OpenGLUdemy.exe	c5d1663380352f4d
+0	902	635136792	CMakeFiles/Opengl.dir/main.cpp.obj	6bb372427c3cb02
+904	1341	635136793	Opengl.exe	920e1c75db4e5d38
+1	1092	635138351	CMakeFiles/Opengl.dir/main.cpp.obj	2e3070ecfe1a339c
+1092	1451	635138351	Opengl.exe	3ddd29c9bcd0c243
+1	511	635138664	Opengl.exe	2cd228b47ceff87f
+1	1038	635139042	CMakeFiles/Opengl.dir/main.cpp.obj	2e3070ecfe1a339c
+1039	1403	635139042	Opengl.exe	2cd228b47ceff87f
+1	441	635139602	CMakeFiles/Opengl.dir/main.cpp.obj	2e3070ecfe1a339c
+442	873	635139603	Opengl.exe	2cd228b47ceff87f
