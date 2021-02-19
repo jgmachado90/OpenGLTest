@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
+#include <glm/ext.hpp>
 
 const int Width = 800;
 const int Height = 800;
@@ -45,6 +46,36 @@ int main() {
 		glm::vec3{ 1.0f, -1.0f, 0.0f },
 		glm::vec3{ 0.0f,  1.0f, 0.0f },
 	};
+
+	//ModelMatrix
+	glm::mat4 ModelMatrix = glm::identity<glm::mat4>();
+
+	//ViewMatrix
+	//posição que a camera ta
+	glm::vec3 Eye{ 0,0,5};
+	//posição que ta olhando
+	glm::vec3 Center{ 0,0,0 };
+	//vetor up da camera
+	glm::vec3 Up{ 0,1,0 };
+	glm::mat4 ViewMatrix = glm::lookAt(Eye, Center, Up);
+
+	//ProjectionMatrix
+	constexpr float FoV = glm::radians(45.0f);
+	const float AspectRatio = Width / Height;
+	const float Near = 0.001f;
+	const float Far = 1000.0f;
+	glm::mat4 ProjectionMatrix = glm::perspective(FoV, AspectRatio, Near, Far);
+
+	//MVP 
+	glm::mat4 ModelViewProjection = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+	//Aplicar a ModelView nos vértices do triangulo
+	for (glm::vec3& Vertex : Triangle) {
+		glm::vec4 ProjectedVertex = ModelViewProjection * glm::vec4{ Vertex, 1.0f };
+		ProjectedVertex /= ProjectedVertex.w;
+		//Esse vai ser o vértice copiado para a GPU e desenhado na tela
+		Vertex = ProjectedVertex;
+	}
 
 	//Copiar os vertices do triangulo para a memória da GPU
 	GLuint VertexBuffer;
