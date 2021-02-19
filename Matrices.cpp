@@ -61,10 +61,95 @@ void ScaleMatrix() {
 	std::cout << "=================" << std::endl;
 }
 
+void RotationMatrix() {
+	std::cout << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "Rotation Matrix" << std::endl;
+	std::cout << "=================" << std::endl;
+
+	glm::mat4 I = glm::identity<glm::mat4>();
+
+	constexpr float Angle = glm::radians(90.0f);
+	glm::vec3 Axis{ 0,0,1 };
+
+	glm::mat4 Rotation = glm::rotate(I, Angle, Axis);
+
+	PrintMatrix(Rotation);
+
+	glm::vec4 Position{ 100,0,0,1 };
+	glm::vec4 Direction{ 100, 0, 0, 0 };
+
+	Position = Rotation * Position;
+
+	std::cout << std::endl;
+	std::cout << glm::to_string(Position) << std::endl;
+
+	std::cout << "=================" << std::endl;
+}
+
+void ComposedMatrices() {
+	std::cout << std::endl;
+	std::cout << "=================" << std::endl;
+	std::cout << "Composed Matrix" << std::endl;
+	std::cout << "=================" << std::endl;
+
+
+	glm::mat4 I = glm::identity<glm::mat4>();
+
+	glm::vec3 T {0,10,0 };
+	glm::mat4 Translation = glm::translate(I, T);
+
+	constexpr float Angle = glm::radians(45.0f);
+	glm::vec3 Axis{ 0,0,1 };
+	glm::mat4 Rotation = glm::rotate(I, Angle, Axis);
+
+	glm::vec3 ScaleAmount{ 2, 2, 0 };
+	glm::mat4 Scale = glm::scale(I, ScaleAmount);
+
+	std::cout << "Translation Matrix" << std::endl;
+	PrintMatrix(Translation);
+	std::cout << std::endl;
+	std::cout << "Rotation Matrix" << std::endl;
+	PrintMatrix(Rotation);
+	std::cout << std::endl;
+	std::cout << "Scale Matrix" << std::endl;
+	PrintMatrix(Scale);
+	std::cout << std::endl;
+
+	glm::vec4 Position{ 1,1,0,1 };
+	glm::vec4 Direction{ 1, 1, 0, 0 };
+
+
+	//Transformar todas essas contas em uma matriz só
+	/*Position = Scale * Position;
+	Position = Rotation * Position;
+	Position = Translation * Position;*/
+	
+	//A*B != B*A
+	glm::mat4 ModelMatrix = Translation * Rotation * Scale;
+
+	std::cout << "Transform" << std::endl;
+	PrintMatrix(ModelMatrix);
+	std::cout << std::endl;
+
+	Position = ModelMatrix * Position;
+	Direction = ModelMatrix * Direction;
+	std::cout << "Position" << std::endl;
+	std::cout << glm::to_string(Position) << std::endl;
+	std::cout << std::endl;
+	std::cout << "Direction" << std::endl;
+	std::cout << glm::to_string(Direction) << std::endl;
+	std::cout << std::endl;
+
+
+	std::cout << "=================" << std::endl;
+}
 
 int main() {
 	std::cout << "Hello World!" << std::endl;
-	TranslationMatrix();
-	ScaleMatrix();
+	//TranslationMatrix();
+	//ScaleMatrix();
+	//RotationMatrix();
+	ComposedMatrices();
 	return 0;
 }
